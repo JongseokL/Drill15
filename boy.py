@@ -8,6 +8,7 @@ from transitions import Machine
 
 import game_world
 from ball import Ball
+from zombie import Zombie
 
 import game_framework
 
@@ -146,6 +147,7 @@ class Boy:
         game_world.add_oject(ball)
         game_world.add_collision_pair('grass:ball', None, ball)
         game_world.add_collision_pair('boy:ball', None, ball)
+        game_world.add_collision_pair('boy:zombie', None, zombie)
 
     def pause(self):
         self.pressed_keys.clear()
@@ -192,3 +194,6 @@ class Boy:
     def handle_collision(self, group, other):
         if group == "boy:ball":
             self.ball_count += 1
+        if group == "boy:zombie":
+            game_framework.quit()
+        

@@ -19,6 +19,7 @@ FRAMES_PER_ACTION = 10
 
 MIN_X, MAX_X = 800, 1600  # 좀비가 오가는 구간
 
+ZOMBIEBALL = 0
 
 class Zombie:
     images = None
@@ -44,6 +45,8 @@ class Zombie:
         elif self.x < MIN_X:
             self.dir = 1
         self.x = clamp(MIN_X, self.x, MAX_X)
+        
+
 
     def draw(self):
         image = Zombie.images['Walk'][int(self.frame)]
@@ -55,3 +58,12 @@ class Zombie:
 
     def get_bb(self):
         return self.x - 100, self.y - 100, self.x + 100, self.y + 100
+
+    def handle_collision(self, group, other):
+        if group == "zombie:ball":
+            self.ZOMBIEBALL += 1
+            if self.ZOMBIEBALL == 2:
+                game_world.remove_object(self)
+                
+            
+       
